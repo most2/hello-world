@@ -29,9 +29,9 @@ pipeline {
             steps {
                 echo "Building..."
                 rtMavenRun (
-                    tool: maven3.8.2, // Tool name from Jenkins configuration
+                    tool: 'maven3.8.2', // Tool name from Jenkins configuration
                     pom: 'pom.xml',
-                    goals: 'clean install'
+                    goals: 'clean install',
                     deployerId: "MAVEN_DEPLOYER"
                 )
                 echo "deoloyed to artifactory..."
