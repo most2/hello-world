@@ -1,14 +1,15 @@
 pipeline {
     agent any
     tools{
-
+        maven "maven3.8.2"
+        jdk "jdk8"
     }
 
     stages {
         stage("build") {
             when {
                 expression {
-                    echo 'env.$BRANCH.NAME'
+                    env.$BRANCH.NAME == "dev"
                 }
             }
             steps {
