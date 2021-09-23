@@ -7,11 +7,6 @@ pipeline {
 
     stages {
         stage("build") {
-            when {
-                expression {
-                    env.$BRANCH.NAME == "dev"
-                }
-            }
             steps {
             echo "Building..."
             }
