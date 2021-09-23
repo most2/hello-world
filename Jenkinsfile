@@ -7,7 +7,7 @@ pipeline {
 
     stages {
 
-	stage('Artifactory configuration') {
+	    stage('Artifactory configuration') {
             steps {
                 rtServer (
                     id: "artifactory-jfrog-server",
@@ -22,15 +22,19 @@ pipeline {
                     snapshotRepo: 'hello_world_repo' 
                 )
             }
-    }
+        }   
     
 
-        stage("build") {
+        stage("Build & Deploy") {
             steps {
-            echo "Building..."
-                script { 
-                    bat 'mvn -o clean install'
-                }
+                echo "Building..."
+                rtMavenRun (
+                    tool: maven3.8.2, // Tool name from Jenkins configuration
+                    pom: 'pom.xml',
+                    goals: 'clean install'
+                    deployerId: "MAVEN_DEPLOYER"
+                )
+                echo "deoloyed to artifactory..."
             }
         }
 
@@ -40,22 +44,12 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
-            steps {
-                echo "create tag..."
-                echo "deoloying to artifactory..."
-                rtMavenRun (
-                    deployerId: "MAVEN_DEPLOYER"
-                )
-            }
-        }
-
-	stage ('Publish build info') {
+	    stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
                     serverId: "artifactory-jfrog-server"
                 )
             }
-    }
+        }   
     }
 }
