@@ -15,7 +15,7 @@ pipeline {
                     credentialsId: rt_jenkins
                 )
 
-		rtMavenDeployer (
+		        rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
                     serverId: "artifactory-jfrog-server",
                     releaseRepo: 'hello_world_repo',
@@ -42,9 +42,11 @@ pipeline {
 
         stage("Deploy") {
             steps {
-            echo "create tag..."
-            echo "deoloying to artifactory..."
-	    deployerId: "MAVEN_DEPLOYER"
+                echo "create tag..."
+                echo "deoloying to artifactory..."
+                rtMavenRun (
+                    deployerId: "MAVEN_DEPLOYER"
+                )
             }
         }
 
