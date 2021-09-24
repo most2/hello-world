@@ -18,8 +18,8 @@ pipeline {
 		        rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
                     serverId: "artifactory-jfrog-server",
-                    releaseRepo: 'hello_world_repo',
-                    snapshotRepo: 'hello_world_repo' 
+                    releaseRepo: 'maven-repo-project',
+                    snapshotRepo: 'maven-repo-project'
                 )
             }
         }   
